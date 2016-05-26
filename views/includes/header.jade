@@ -1,0 +1,34 @@
+nav.navbar.navbar-inverse
+    .container-fluid
+        .navbar-header
+            a.navbar-brand(href="/films?limit=10&page=1") Фільми
+        ul.nav.navbar-nav
+            li(class= title == 'Співробітники' ? 'active' : '')
+                a(href='/staffs') Співробітники
+            - if (isAuth)
+                li(class= title == 'Профіль' ? 'active' : '')
+                    a(href='/admin/profile') Профіль
+            - if (isAuth)
+               li.dropdown
+                   a.dropdown-toggle(href="#", data-toggle="dropdown") Додати
+                      span.caret
+                   ul.dropdown-menu
+                      li
+                         a(href="/admin/staff") Співробітник
+                         a(href="/admin/film") Фільм
+
+        form.navbar-form.navbar-left#searchForm(role="search", method="GET")
+            .form-group
+                input.form-control#searchWord(type="text", placeholder="Search")
+            button.btn.btn-default(type="submit") Пошук
+            a#search.hidden(href='#')
+
+        - if (isAuth)
+            ul.nav.navbar-nav.navbar-right
+                li
+                    a(href="/admin/logout")
+                        span.glyphicon.glyphicon-log-out  Вийти
+
+    #imgHeader
+
+script(type='text/javascript', src='/javascripts/index.js')

@@ -1,0 +1,21 @@
+extends ../layouts/layout
+block content
+    .raw.staff
+        .container-fluid.col-xs-10.col-sm-offset-1.color-font.margin-top-bottom
+            img.left-img.size-img(src=staff.img)
+            h3 Cпівробітник #{staff.first_name} #{staff.last_name}
+            if (isAuth)
+                b Ідентифікатор#{' '}
+                | #{staff.employee_id}
+            br
+            b Дата народження#{' '}
+            | #{staff.date_birth ? staff.date_birth : '—'}
+            br
+            - if (films)
+                h3 Фільми:#{' '}
+                - for (var i = 0; i < films.length; i++)
+                    a.space(href='/film/' + films[i].film_id)
+                        span= films[i].title
+            .fotter
+           // b Посада#{' '}
+            | #{staff.positions}

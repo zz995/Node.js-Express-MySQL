@@ -1,0 +1,40 @@
+extends ../layouts/layout
+block content
+    .raw.staff
+        .container-fluid.col-xs-10.col-sm-offset-1.color-font.margin-top-bottom
+            h3 Фільм
+            - if (!isNew)
+                .delete-staff-wrap
+                    .delete-staff
+                        form(role='form', action='/admin/film' + '/' + film.film_id + '?_method=DELETE', method="post")
+                            button.btn.btn-danger(type='submit') Видалити Фільм
+            h4= titleSp
+            - if (success.length)
+                .alert.alert-success(role='alert')= success
+            - if (error.length)
+                .alert.alert-danger(role='alert')= error
+            form(role='form', action='/admin/film'+(!isNew?'/'+film.film_id+'?_method=PUT':''), method="post", enctype="multipart/form-data", accept="image/jpg, image/jpeg, image/png")
+                .form-group
+                    input(type='file', name='picture')
+                .form-group
+                    .form-inline.padding-film
+                        input.form-control.space(type='text', name='title', placeholder="Назва", value=isNew?undefined:film.title, required = isNew)
+                        input.form-control.space(type='number', name='year', placeholder="Рік виходу", value=isNew?undefined:film.year, required = isNew)
+                        input.form-control.space(type='number', name='time', placeholder="Час", value=isNew?undefined:film.time, required = isNew)
+                        input.form-control(type='text', name='type', placeholder="Тип", value=isNew?undefined:film.type, required = isNew)
+                .form-group
+                    input.form-control(type='text', name='trailer', placeholder="Посилання на трайлер", value=isNew?undefined:film.trailer)
+                .form-group
+                    input.form-control(type='text', name='country', placeholder="Країни необхідно перерахувати через коми", value=isNew?undefined:film.country)
+                .form-group
+                    input.form-control(type='text', name='genre', placeholder="Жанри необхідно перерахувати через коми", value=isNew?undefined:film.genre)
+                .form-group
+                    input.form-control(type='text', name='language', placeholder="Мови необхідно перерахувати через коми", value=isNew?undefined:film.language)
+                .form-group
+                    input.form-control(type='text', name='employee[actor]', placeholder="Акторів необхідно перерахувати через коми", value=isNew?undefined:film.actorString)
+                .form-group
+                    input.form-control(type='text', name='employee[producer]', placeholder="Режисерів необхідно перерахувати через коми", value=isNew?undefined:film.producerString)
+                .form-group
+                    textarea.form-control(name='description', placeholder="Описання", required = isNew)= isNew?undefined:film.description
+                .form-group
+                    button.btn.btn-default.space(type='submit') Відправити

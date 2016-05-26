@@ -1,0 +1,39 @@
+extends ../layouts/layout
+block content
+    .raw.staff
+        .container-fluid.col-xs-10.col-sm-offset-1.color-font.margin-top-bottom
+            h3 Cпівробітник
+            - if (!isNew)
+                .delete-staff-wrap
+                    .delete-staff
+                        form(role='form', action='/admin/staff' + '/' + staff.employee_id + '?_method=DELETE', method="post")
+                            button.btn.btn-danger(type='submit') Видалити співробітника
+            h4= titleSp
+            - if (success.length)
+                .alert.alert-success(role='alert')= success
+            - if (error.length)
+                .alert.alert-danger(role='alert')= error
+            form(role='form', action='/admin/staff'+(!isNew?'/'+staff.employee_id+'?_method=PUT':''), method="post", enctype="multipart/form-data", accept="image/jpg, image/jpeg, image/png")
+                .form-group
+                    input(type='file', name='picture')
+                //.form-inline.bottom
+                    .form-group.space
+                        .checkbox
+                            label
+                                input(type='checkbox', name="position[producer]", checked=(isNew || !staff.positions?undefined:(staff.positions.indexOf('producer')+1?true:undefined)))
+                                |  Режисер
+                    .form-group
+                        .checkbox
+                            label
+                                input(type='checkbox', name="position[actor]", checked=(isNew || !staff.positions?undefined:(staff.positions.indexOf('actor')+1?true:undefined)))
+                                |  Актор
+                .form-group
+                    input.form-control(type='text', name='first_name', placeholder="Ім'я", value=isNew?undefined:staff.first_name)
+                .form-group
+                    input.form-control(type='text', name='last_name', placeholder="Фамілія", value=isNew?undefined:staff.last_name)
+                - if (!isNew)
+                    h5 Дата народження: #{staff.date_birth}
+                .form-group
+                    input.form-control(type='date', name='date_birth')
+                .form-group
+                    button.btn.btn-default.space(type='submit') Відправити

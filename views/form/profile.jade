@@ -1,0 +1,18 @@
+extends ../layouts/layout
+block content
+    .raw.staff
+        .container-fluid.col-xs-10.col-sm-offset-1.color-font
+            form(action='/admin/profile?_method=PUT', method='post')
+                - if (error.length)
+                    pre.error= error
+                - if (success.length)
+                    pre.success= success
+                h4= admin.name
+                .form-group
+                    input.form-control(type='password', placeholder='Новий пароль', name='password')
+                .form-group
+                    input.form-control(type='password', placeholder='Повторіть новий пароль', name='confirm')
+                .form-group
+                    input.form-control(type='password', placeholder='Поточний пароль', name='passwordOld')
+                .form-group
+                    button.btn.btn-primary(type='submit') Змінити

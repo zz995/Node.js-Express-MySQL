@@ -1,0 +1,58 @@
+extends ../layouts/layout
+block content
+    .raw.staff
+        .container-fluid.col-xs-10.col-sm-offset-1.color-font.margin-top-bottom
+            - if (success.length)
+                .alert.alert-success(role='alert')= success
+            - if (error.length)
+                .alert.alert-danger(role='alert')= error
+            .film
+                h3 Фільм #{film.title}
+                p.fig
+                    img.left-img.film-img(src=film.img)
+                    b Рік#{' '}
+                    | #{film.year}
+                    br
+                    b Тип#{' '}
+                    | #{film.type}
+                    br
+                    b Час#{' '}
+                    | #{film.time + ' мин'}
+                    - if (film.genre)
+                        br
+                        b Жанри#{' '}
+                        - for (var j = 0, f = film.genre, l = f.length; j < l; j++)
+                            a.space(href='/films?genre='+f[j])
+                                span= f[j]
+                    - if (film.country)
+                        br
+                        b Країни#{' '}
+                        - for (var j = 0, f = film.country, l = f.length; j < l; j++)
+                            a.space(href='/films?country='+f[j])
+                                span= f[j]
+                    - if (film.language)
+                        br
+                        b Мови#{' '}
+                        - for (var j = 0, f = film.language, l = f.length; j < l; j++)
+                            a.space(href='/films?language='+f[j])
+                                span= f[j]
+                    - if (film.actor)
+                        br
+                        b Актори#{' '}
+                        - for (var j = 0, f = film.actor, l = f.length; j < l; j++)
+                            a.space(href='/staff/'+f[j].id)
+                                span= f[j].name
+                    - if (film.producer)
+                        br
+                        b Режисери#{' '}
+                        - for (var j = 0, f = film.producer, l = f.length; j < l; j++)
+                            a.space(href='/staff/'+f[j].id)
+                                span= f[j].name
+                    br
+                    b Описання#{' '}
+                    | #{film.description}
+                    br
+                    - if (film.trailer)
+                        .video
+                            video(width="640", controls)
+                                source(src=film.trailer)

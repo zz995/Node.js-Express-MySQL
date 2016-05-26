@@ -1,0 +1,11 @@
+{
+  "img": {
+    "supportMimeTypes": ["image/jpg", "image/jpeg", "image/png"],
+    "limits": {
+      "fileSize": 10485760
+    }
+  },
+  "session": {
+    "secret": "qwertyuio"
+  }
+}

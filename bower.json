@@ -1,0 +1,12 @@
+{
+  "name": "",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Zheka <zz995zzhk@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

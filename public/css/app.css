@@ -1,0 +1,158 @@
+body {
+    background: gainsboro;
+}
+
+.color-font {
+    background: white;
+    display: block;
+}
+
+.margin-top-bottom {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.space {
+    margin-right: 10px;
+}
+
+.staff .bottom {
+    margin-bottom: 10px;
+}
+
+hr {
+    background-color: gainsboro;
+    height: 2px;
+    margin-bottom: 0;
+}
+
+.staff .fig {
+    text-align: left;
+}
+
+.left-img {
+    float:left;
+    margin: 7px 7px 7px 0;
+}
+
+.list-staffs img {
+    clear: both;
+}
+/*.staff, .staff div {
+    clear: both;
+}*/
+
+.staffs img {
+    height: 350px;
+}
+
+.hidden {
+    width:0;
+    height:0;
+    overflow:hidden;
+}
+
+.delete-staff-wrap {
+    overflow: hidden;
+    width: 100%;
+}
+
+.delete-staff {
+    float: right;
+}
+
+/*.size-img {
+    width: 400px;
+}*/
+
+.films img {
+    height: 255px;
+}
+
+.form-inline {
+    padding-bottom: 20px;
+}
+
+.delete-param a {
+    text-decoration: none;
+}
+
+.delete-param .glyphicon-remove-circle {
+    color: #ff5a5d;
+    cursor: pointer;
+}
+
+.padding-film {
+    padding-bottom: 0;
+}
+
+.video {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.film-img {
+    min-height: 300px;
+    margin-bottom: 50px;
+}
+
+.film {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.fotter {
+    margin-bottom: 20px;
+}
+
+.fig{
+    overflow: hidden;
+}
+
+.staff img {
+    height: 250px;
+}
+
+/*.break {
+    display: in;
+    float: left;
+    word-wrap: break-word;
+}*/
+.group {
+    clear: both;
+    text-align: center;
+/*    display: flex;
+    justify-content: center; */
+}
+
+.group input, .group select {
+    margin-top: 20px;
+}
+
+.films .form-inline {
+    padding: 0;
+}
+
+.group span {
+    position: relative;
+    top: 9px;
+}
+
+#imgHeader {
+    height: 300px;
+    position: relative;
+    background-image:url(/images/2.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    min-width: 100%;
+}
+
+.main {
+    position: relative;
+    margin-top: -150px;
+}
+
+.margin-non-space {
+    margin-left: 15px;
+    width: 95%;
+}

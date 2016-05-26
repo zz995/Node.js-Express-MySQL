@@ -1,0 +1,16 @@
+extends ../layouts/layout
+block content
+    .container
+        .center.col-sm-offset-3.col-sm-6.color-font
+            form.form-horizontal(action='/admin/session', method='post')
+                - if (error.length)
+                    pre.margin-non-space.error= error
+                .form-group
+                    label.margin-non-space.col-sm-2.control-label(for='name')
+                    input.margin-non-space.form-control(type='text', placeholder='Ім\'я', name='name', required=true)
+                .form-group
+                    label.margin-non-space.col-sm-2.control-label(for='password')
+                    input.margin-non-space.form-control(type='password', placeholder='Пароль', name='password', required=true)
+                .form-group
+                    .center-btn
+                        button.margin-non-space.btn.btn-default.space(type='submit') Увійти

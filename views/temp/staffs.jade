@@ -1,0 +1,79 @@
+extends ../layouts/layout
+block content
+   mixin linkPage (page, text, notstaffs)
+      a#idButAppend(href='/staffs?sort='+sort.name
+      +'&desc='+(sort.desc?'true':'false')
+      +'&limit='+limit
+      +'&page='+page)
+         span&attributes(attributes)= text
+   .raw.staffs
+      .container-fluid.col-xs-10.col-sm-offset-1.color-font.margin-top-bottom
+         - if (success.length)
+            .alert.alert-success(role='alert')= success
+         - if (error.length)
+            .alert.alert-danger(role='alert')= error
+         div.margin-top-bottom
+            .form-group
+               .form-inline
+                  span.space Сортування
+                  select.form-control.space#sortstaffs
+                     option(value='false first_name', selected=sort.name=='first_name' && !sort.desc) Ім'я&#9650;
+                     option(value='true first_name', selected=sort.name=='first_name' && sort.desc) Ім'я&#9660;
+                     option(value='false last_name', selected=sort.name=='last_name' && !sort.desc) Прізвище&#9650;
+                     option(value='true last_name', selected=sort.name=='last_name' && sort.desc) Прізвище&#9660;
+                     option(value='false date_birth', selected=sort.name=='date_birth' && !sort.desc) Дата народження&#9650;
+                     option(value='true date_birth', selected=sort.name=='date_birth' && sort.desc) Дата народження&#9660;
+                  #sort
+                     +linkPage(0)(class="hidden")
+         - for (var i = 0; i < staffs.length; i++)
+            .list-staffs.col-xs-12.col-sm-6.col-md-4
+               - if (i)
+                   hr.visible-xs
+                        
+               - if (i >= 2)
+                   hr.visible-sm
+                        
+               - if (i >= 3)
+                   .visible-md
+                       hr
+                   .visible-lg
+                       hr
+                            
+               a.col-xs-12(href='/staff/'+staffs[i].employee_id)
+                  h4= staffs[i].first_name + ' ' + staffs[i].last_name
+               p.col-xs-12.fig
+                  img.left-img(src=staffs[i].img)
+               .col-xs-12   
+                  if (isAuth)
+                     b Ідентифікатор#{' '}
+                     | #{staffs[i].employee_id}
+                     br
+            
+                  br
+               - if (isAuth)
+                  div
+                     .form-group
+                        a(href='/admin/staff/'+staffs[i].employee_id+'/edit')
+                           button.btn.btn-default.space Редагувати
+
+      if (pages > 1)
+         .text-center.col-xs-12
+            ul.pagination
+               - var page = curPage + 1;
+               - var pageSt = (page-5)>0?((page<(pages-4)) ? (page-4) : (pages>9 ? (pages-8) : 1)):1;
+               - var count = pageSt+9 < pages ? pageSt+9 : pages+1;
+               - if (pageSt > 1)
+                  li
+                     +linkPage(1)(class='glyphicon glyphicon-fast-backward')
+               - for(var i = pageSt; i < count; i++)
+                  - if(i==page)
+                     li.active
+                        a(href='#') #{i}
+                  - else
+                     li
+                        +linkPage(i, i)
+               - if (pageSt < pages - 8)
+                  li
+                     +linkPage(pages)(class='glyphicon glyphicon-fast-forward')
+
+   script(type='text/javascript', src='/javascripts/staffs.js')

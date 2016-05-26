@@ -1,0 +1,185 @@
+extends ../layouts/layout
+block content
+    mixin linkPage (page, text, notstaffs)
+        a#idButAppend(href='/films?limit=' + limit
+        + '&page=' + page
+        + (query.sort ? '&sort=' + query.sort.name + '&desc=' + (query.sort.desc ? 'true' : 'false') : '')
+        + (query.actor ? '&actor=' + query.actor.join(' ') : '')
+        + (query.producer ? '&producer=' + query.producer.join(' ') : '')
+        + (query.yearFor ? '&for=' + query.yearFor : '')
+        + (query.yearTo ? '&to=' + query.yearTo : '')
+        + (query.genre ? '&genre=' + query.genre : '')
+        + (query.country ? '&country=' + query.country : '')
+        + (query.language ? '&language=' + query.language : '')
+        )
+            span&attributes(attributes)= text
+            
+    mixin filmAdd (film)
+        .list-films.col-xs-12.col-lg-6
+            - if (i)
+                hr
+            a(href='/film/' + film.film_id)
+                h4= film.title
+            p.fig
+                img.left-img(src=film.img)
+                b Рік#{' '}
+                | #{film.year}
+                br
+                b Тип#{' '}
+                | #{film.type}
+                br
+                b Час#{' '}
+                | #{film.time + ' мин'}
+                - if (film.genre)
+                    br
+                    b Жанри#{' '}
+                    - for (var j = 0, f = film.genre, l = f.length; j < l; j++)
+                        a(href='/films?genre='+f[j])
+                            span= f[j]
+                        span #{' '}
+                - if (film.country)
+                    br
+                    b Країни#{' '}
+                    - for (var j = 0, f = film.country, l = f.length; j < l; j++)
+                        a(href='/films?country='+f[j])
+                            span= f[j]
+                        span #{' '}
+                - if (film.language)
+                    br
+                    b Мови#{' '}
+                    - for (var j = 0, f = film.language, l = f.length; j < l; j++)
+                        a(href='/films?language='+f[j])
+                            span= f[j]
+                        span #{' '}
+                - if (film.actor)
+                    br
+                    b Актори#{' '}
+                    - for (var j = 0, f = film.actor, l = f.length; j < l; j++)
+                        a(href='/staff/'+f[j].id)
+                            span= f[j].name
+                        span #{' '}
+                - if (film.producer)
+                    br
+                    b Режисери#{' '}
+                    - for (var j = 0, f = film.producer, l = f.length; j < l; j++)
+                        a(href='/staff/'+f[j].id)
+                            span= f[j].name
+                        span #{' '}
+                br
+                b Описання#{' '}
+                | #{film.description}
+                br
+        
+            - if (isAuth)
+                div
+                    .form-group
+                        a(href='/admin/film/' + film.film_id + '/edit')
+                            button.btn.btn-default.space Редагувати
+                                        
+    .container-fluid.col-xs-10.col-sm-offset-1.color-font
+        .row.films
+            - if (success.length)
+                .alert.alert-success(role='alert')= success
+            - if (error.length)
+                .alert.alert-danger(role='alert')= error
+            #query.delete-param
+                h5
+                    - if (query.genre)
+                        b Жанри:#{' '}
+                        - for (var i = 0, g = query.genre, l = g.length; i < l; i++)
+                            span= g[i]
+                            span.glyphicon.glyphicon-remove-circle.space(data-param='genre', data-name=g[i])
+                    - if (query.country)
+                        b Країни:#{' '}
+                        - for (var i = 0, c = query.country, l = c.length; i < l; i++)
+                            span= c[i]
+                            span.glyphicon.glyphicon-remove-circle.space(data-param='country', data-name=c[i])
+                    - if (query.language)
+                        b Мова:#{' '}
+                        span= query.language
+                        span.glyphicon.glyphicon-remove-circle.space(data-param='language', data-name=query.language)
+                    - if (query.search)
+                        b Назва:#{' '}
+                        span= query.search
+                        span.glyphicon.glyphicon-remove-circle.space(data-param='search', data-name=query.search)
+            div.margin-top-bottom
+               .form-group
+                  .form-inline
+                     .group
+                         nobr
+                             span.space Актор
+                             input.form-control.space#searchAct(type='text', value=query.actor && query.actor.join(' '), placeholder="Актор")
+                         span
+                         nobr
+                         span.space Режисер
+                         input.form-control.space#searchPr(type='text', value=query.producer && query.producer.join(' '), placeholder="Режисер")
+                         span
+                         nobr
+                             span.space Період
+                             input.form-control#yearFor(type='number', value=query.yearFor, placeholder="Від")
+                             span -
+                             input.form-control#yearTo(type='number', value=query.yearTo, placeholder="До")
+            
+                  .form-inline
+                     .group
+                         nobr
+                             span.space Сортування
+                             select.form-control.space#sortFilms
+                                option(value='', selected=true)
+                                option(value='false title', selected=query.sort && query.sort.name=='title' && !query.sort.desc) Назва&#9650;
+                                option(value='true title', selected=query.sort && query.sort.name=='title' && query.sort.desc) Назва&#9660;
+                                option(value='false time', selected=query.sort && query.sort.name=='time' && !query.sort.desc) Час&#9650;
+                                option(value='true time', selected=query.sort && query.sort.name=='time' && query.sort.desc) Час&#9660;
+                                option(value='false year', selected=query.sort && query.sort.name=='year' && !query.sort.desc) Рік&#9650;
+                                option(value='true year', selected=query.sort && query.sort.name=='year' && query.sort.desc) Рік&#9660;
+                         span #{' '}
+                         nobr
+                             span.space Жанр
+                             select.form-control.space#genre
+                                 option(value='', selected=true)
+                                 - for (var i = 0, g = select.genre, l = g.length; i < l; i++)
+                                    option(value=g[i].name)= g[i].name
+                         span #{' '}
+                         nobr    
+                             span.space Країна
+                             select.form-control.space#country
+                                 option(value='', selected=true)
+                                 - for (var i = 0, c = select.country, l = c.length; i < l; i++)
+                                    option(value=c[i].name)= c[i].name
+                         span #{' '}
+                         nobr    
+                             span.space Мова
+                             select.form-control.space#language
+                                 option(value='', selected=true)
+                                 - for (var i = 0, la = select.language, l = la.length; i < l; i++)
+                                    option(value=la[i].name)= la[i].name
+                  #attr
+                     +linkPage(0)(class='hidden')
+                hr.col-xs-12
+            - for (var i = 0; i < films.length; i++)
+                .row
+                    +filmAdd(films[i++])
+                    - if (films[i])
+                        +filmAdd(films[i])  
+        .col-xs-12
+            if (pages > 1)
+                .text-center
+                    ul.pagination
+                        - var page = curPage + 1;
+                        - var pageSt = (page-5)>0?((page<(pages-4)) ? (page-4) : (pages>9 ? (pages-8) : 1)):1;
+                        - var count = pageSt+9 < pages ? pageSt+9 : pages+1;
+                        - if (pageSt > 1)
+                            li
+                                +linkPage(1)(class='glyphicon glyphicon-fast-backward')
+                        - for(var i = pageSt; i < count; i++)
+                            - if(i==page)
+                                li.active
+                                    a(href='#') #{i}
+                            - else
+                                li
+                                    +linkPage(i, i)
+                        - if (pageSt < pages - 8)
+                            li
+                                +linkPage(pages)(class='glyphicon glyphicon-fast-forward')
+
+    script(type='text/javascript', src='/javascripts/films.js')
